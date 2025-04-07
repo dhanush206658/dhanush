@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fitness Tracker App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 8px 0;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .workout-list {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .workout-item {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .delete-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fitness Tracker</h1>
+    <input type="text" id="workout" placeholder="Workout (e.g., Running)">
+    <input type="number" id="duration" placeholder="Duration (minutes)">
+    <input type="number" id="calories" placeholder="Calories Burned">
+    <button onclick="addWorkout()">Add Workout</button>
+
+    <div class="workout-list" id="workoutList"></div>
+  </div>
+
+  <script>
+    let workouts = JSON.parse(localStorage.getItem("workouts")) || [];
+
+    function saveWorkouts() {
+      localStorage.setItem("workouts", JSON.stringify(workouts));
+    }
+
+    function renderWorkouts() {
+      const list = document.getElementById("workoutList");
+      list.innerHTML = "";
+      workouts.forEach((w, i) => {
+        const div = document.createElement("div");
+        div.className = "workout-item";
+        div.innerHTML = `
+          <strong>${w.workout}</strong> - ${w.duration} mins - ${w.calories} kcal
+          <button class="delete-btn" onclick="deleteWorkout(${i})">X</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function addWorkout() {
+      const workout = document.getElementById("workout").value;
+      const duration = document.getElementById("duration").value;
+      const calories = document.getElementById("calories").value;
+
+      if (workout && duration && calories) {
+        workouts.push({ workout, duration, calories });
+        saveWorkouts();
+        renderWorkouts();
+        document.getElementById("workout").value = "";
+        document.getElementById("duration").value = "";
+        document.getElementById("calories").value = "";
+      } else {
+        alert("Please fill in all fields!");
+      }
+    }
+
+    function deleteWorkout(index) {
+      workouts.splice(index, 1);
+      saveWorkouts();
+      renderWorkouts();
+    }
+
+    renderWorkouts();
+  </script>
+</body>
+</html>
