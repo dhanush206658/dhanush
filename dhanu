@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Quote Generator</title>
+  <style>
+    body {
+      background: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .quote {
+      font-size: 1.5rem;
+      font-style: italic;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .author {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="quote" id="quote">Click the button to generate a quote.</div>
+    <div class="author" id="author"></div>
+    <button onclick="generateQuote()">Generate Quote</button>
+  </div>
+
+  <script>
+    const quotes = [
+      { quote: "The best way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+      { quote: "Life is what happens when you’re busy making other plans.", author: "John Lennon" },
+      { quote: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" },
+      { quote: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+      { quote: "If you want to achieve greatness stop asking for permission.", author: "Unknown" },
+      { quote: "The harder you work for something, the greater you'll feel when you achieve it.", author: "Unknown" },
+    ];
+
+    function generateQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const selected = quotes[randomIndex];
+      document.getElementById('quote').textContent = `"${selected.quote}"`;
+      document.getElementById('author').textContent = `— ${selected.author}`;
+    }
+  </script>
+
+</body>
+</html>
